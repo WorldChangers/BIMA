@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "nodejs-api-boilerplate",
+      "name": "insurance",
       "script": "./dist",
       "merge_logs": true,
       "max_restarts": 20,

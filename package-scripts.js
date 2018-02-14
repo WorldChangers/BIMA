@@ -52,11 +52,6 @@ module.exports = {
       fix: 'eslint --fix src',
     },
     lintStaged: 'lint-staged',
-    db: {
-      seedsUser: 'bash ./scripts/seeds/user.seed.sh',
-      seedsClearUser: 'bash ./scripts/seeds/clearUser.seed.sh',
-      seedsClear: 'bash ./scripts/seeds/clearAll.seed.sh',
-    },
     test: {
       default: `${crossEnv('NODE_ENV=test')} mocha $(find __tests__ -name *.test.js) --colors --compilers js:babel-register`,
       watch: series.nps('test -w'),

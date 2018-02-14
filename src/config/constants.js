@@ -12,7 +12,7 @@ const WHITELIST = {
 
 const devConfig = {
   JWT_SECRET: process.env.JWT_SECRET_DEV,
-  MONGO_URL: process.env.MONGO_URL_DEV,
+  MONGO_URL: process.env.MONGO_URL,
 };
 
 const testConfig = {
@@ -27,7 +27,6 @@ const prodConfig = {
 
 const defaultConfig = {
   PORT: process.env.PORT || 3000,
-  RAVEN_ID: process.env.RAVEN_ID,
   WHITELIST,
 };
 

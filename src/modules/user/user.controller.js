@@ -14,7 +14,7 @@ export const signup = async (req, res) => {
 };
 
 export const login = (req, res) => {
-  res.status(HTTPStatus.ACCEPTED).json(req.user.toAuthJSON());
+  res.status(HTTPStatus.ACCEPTED).json(req.user);
 };
 
 // Forget password
