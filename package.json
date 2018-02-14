@@ -45,7 +45,6 @@
   },
   "scripts": {
     "build": "nps build",
-    "start": "nps",
     "test": "nps test",
     "test:watch": "nps test.watch",
     "dev": "nps dev",

@@ -6,15 +6,15 @@ import email from '../../services/email';
 export const signup = async (req, res) => {
   try {
     // User.collection.dropIndex({"username":1})
-    const user = await User.create(req.body);
-    return res.status(HTTPStatus.CREATED).json(user.toAuthJSON());
+    await User.create(req.body);
+    return res.status(HTTPStatus.CREATED).json(req.user);
   } catch (e) {
     return res.status(HTTPStatus.BAD_REQUEST).json(e.errmsg);
   }
 };
 
 export const login = (req, res) => {
-  res.status(HTTPStatus.ACCEPTED).json(req.user.toAuthJSON());
+  res.status(HTTPStatus.ACCEPTED).json(req.user);
 };
 
 // Forget password

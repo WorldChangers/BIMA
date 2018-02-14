@@ -6,9 +6,7 @@ import jwt from 'jsonwebtoken';
 import constants from '../../config/constants';
 
 const status = {
-  owner: 'owner',
   manager: 'manager',
-  teller: 'teller',
   admin: 'admin',
   notVerified: 'member',
 };
@@ -50,7 +48,7 @@ const UserSchema = new Schema(
     },
     organisation: {
       type: String,
-      required: [true, 'Insurance organisation is required']
+      required: [true, 'Insurance organisation is required'],
     },
     status: {
       type: String,
@@ -132,8 +130,8 @@ UserSchema.methods = {
   toJSON() {
     return {
       _id: this._id,
-      name: this.name,
-      phone: this.phone,
+      org: this.organisation,
+      token: `JWT ${this.createToken()}`,
     };
   },
 };
