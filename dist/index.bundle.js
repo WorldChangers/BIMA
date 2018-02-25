@@ -623,6 +623,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Server setup
  */
+
 const app = (0, _express2.default)();
 
 app.get('/', (req, res) => {
