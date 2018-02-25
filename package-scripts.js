@@ -19,14 +19,6 @@ module.exports = {
       description: 'Start project with pm2 on production.',
       script: `${crossEnv('NODE_ENV=production')} pm2 start processes.json dist/index.bundle.js`,
     },
-    doc: {
-      description: 'Documenting the api.',
-      default: 'apidoc -i src',
-      deploy: {
-        description: 'Deploy the docs on surge.',
-        script: series('nps doc', `surge ./doc -d ${process.env.DOCS_WEBSITE}`),
-      },
-    },
     dev: {
       start: {
         description: 'Running on dev environment.',
@@ -46,29 +38,6 @@ module.exports = {
         description: 'Running on dev environment with debug on.',
         script: concurrent.nps('dev.watch', 'dev.withDebug'),
       },
-    },
-    lint: {
-      default: 'eslint src',
-      fix: 'eslint --fix src',
-    },
-    lintStaged: 'lint-staged',
-    test: {
-      default: `${crossEnv('NODE_ENV=test')} mocha $(find __tests__ -name *.test.js) --colors --compilers js:babel-register`,
-      watch: series.nps('test -w'),
-      cover: `${crossEnv('NODE_ENV=test')} istanbul cover _mocha $(find __tests__ -name *.test.js) -- --compilers js:babel-register --colors --bail --recursive '__tests__/**/*.test.js'`,
-      checkCover: series('nps test.cover', 'istanbul check-coverage'),
-    },
-    cover: {
-      description: 'Open the coverage on browser.',
-      default: 'open coverage/lcov-report/*.html',
-    },
-    reportCoverage: {
-      description: 'Send report to coveralls.',
-      default: 'coveralls < ./coverage/lcov.info',
-    },
-    validate: {
-      description: 'Validate code by linting, type-checking.',
-      default: series.nps('lint', 'test'),
-    },
+    }
   },
 };
