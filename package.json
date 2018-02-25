@@ -45,7 +45,7 @@
   },
   "scripts": {
     "build": "nps build",
-    "start": "nps",
+    "start": "nodemon dist/index.bundle.js",
     "dev": "nodemon dist/index.bundle.js",
     "dev:debug": "nps dev.debug"
   },
