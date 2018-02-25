@@ -89,10 +89,7 @@
     "prettier": "^1.6.1",
     "semantic-release": "^7.0.2",
     "source-list-map": "2.0.0",
-    "supertest": "^3.0.0",
-    "webpack": "^3.5.5",
-    "webpack-node-externals": "^1.6.0",
-    "webpack-sources": "1.0.1"
+    "supertest": "^3.0.0"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -124,6 +121,9 @@
     "shortid": "^2.2.8",
     "slug": "^0.9.1",
     "validator": "^9.1.2",
-    "winston": "^2.3.1"
+    "winston": "^2.3.1",
+    "webpack": "^3.5.5",
+    "webpack-node-externals": "^1.6.0",
+    "webpack-sources": "1.0.1"
   }
 }
