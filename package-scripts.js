@@ -24,8 +24,12 @@ module.exports = {
         description: 'Running on dev environment.',
         script: `${crossEnv('NODE_ENV=development')} nodemon dist/index.bundle.js`,
       },
+      // default: {
+      //   script: concurrent.nps('dev.watch', 'dev.start'),
+      // },
       default: {
-        script: concurrent.nps('dev.watch', 'dev.start'),
+        description: 'Start project with pm2 on production.',
+        script: `${crossEnv('NODE_ENV=production')} pm2 start processes.json`,
       },
       watch: {
         description: 'Webpack watch for change and compile.',
