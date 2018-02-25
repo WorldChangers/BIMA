@@ -48,6 +48,7 @@ const UserSchema = new Schema(
     },
     organisation: {
       type: String,
+      unique: true,
       required: [true, 'Insurance organisation is required'],
     },
     status: {
@@ -56,10 +57,16 @@ const UserSchema = new Schema(
       default: status.notVerified,
       required: [true, 'Status is needed'],
     },
+    clients: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Clients',
+      },
+    ],
     resetPasswordToken: String,
     resetPasswordExpires: Date,
   },
-  { timeStamps: true },
+  { timestamps: true },
 );
 
 UserSchema.plugin(uniqueValidator, {

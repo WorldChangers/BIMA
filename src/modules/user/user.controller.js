@@ -7,7 +7,7 @@ export const signup = async (req, res) => {
   try {
     // User.collection.dropIndex({"username":1})
     await User.create(req.body);
-    return res.status(HTTPStatus.CREATED).json(req.user);
+    return res.status(HTTPStatus.CREATED);
   } catch (e) {
     return res.status(HTTPStatus.BAD_REQUEST).json(e.errmsg);
   }

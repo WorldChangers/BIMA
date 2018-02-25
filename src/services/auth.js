@@ -8,13 +8,13 @@ import constants from '../config/constants';
 /**
  * Local Strategy Auth
  */
-const localOpts = { usernameField: 'phone' };
+const localOpts = { usernameField: 'email' };
 
 const localLogin = new LocalStrategy(
   localOpts,
-  async (phone, password, done) => {
+  async (email, password, done) => {
     try {
-      const user = await User.findOne({ phone });
+      const user = await User.findOne({ email });
 
       if (!user) return done(null, false);
       else if (!user.comparePassword(password)) return done(null, false);

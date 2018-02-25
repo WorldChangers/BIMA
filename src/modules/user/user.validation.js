@@ -10,10 +10,4 @@ export default {
       organisation: Joi.string().required(),
     },
   },
-
-  forget: {
-    body: {
-      email: Joi.string().email(),
-    },
-  },
 };

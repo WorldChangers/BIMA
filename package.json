@@ -12,9 +12,9 @@
     "url": "https://github.com/thedma04/nodejs-api-boilerplate/issues"
   },
   "engines": {
-    "node": ">= 6.10",
-    "npm": ">= 3.10",
-    "yarn": ">=0.20.3"
+    "node": ">= 8.9.4",
+    "npm": ">= 5.6.0",
+    "yarn": ">=0.15.1"
   },
   "main": "./src/index.js",
   "keywords": [
@@ -47,7 +47,7 @@
     "build": "nps build",
     "test": "nps test",
     "test:watch": "nps test.watch",
-    "dev": "nps dev",
+    "start": "nps dev",
     "dev:debug": "nps dev.debug",
     "prettier": "prettier --single-quote --print-width 80 --trailing-comma all --write 'src/**/*.js'",
     "precommit": "nps lintStaged && nps validate",

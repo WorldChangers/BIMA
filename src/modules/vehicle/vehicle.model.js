@@ -2,6 +2,9 @@ import mongoose, { Schema } from 'mongoose';
 
 const vehicleSchema = new Schema(
   {
+    make: String,
+    color: String,
+    model: String,
     regNumber: {
       type: String,
       required: [true, 'Please name is required'],
@@ -19,36 +22,14 @@ const vehicleSchema = new Schema(
       type: String,
       required: [true, 'Please provide the insurance type'],
     },
-    value: {
-      type: Number,
-      required: [true, 'Price of the car is needed'],
-    },
-    premium: {
-      type: Number,
-      required: [true, 'Premium to be paid is needed'],
-    },
-    claimPaid: {
-      type: Number,
-    },
+    claims: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Claim',
+      },
+    ],
   },
-  { timeStamps: true },
+  { timestamps: true },
 );
-
-// Defining methods on mongoose to be used on the model instance
-vehicleSchema.methods = {
-  /**
-   * Parse the user object in data we wanted to send
-   *
-   * @public
-   * @returns {Object} User - ready for populate
-   */
-  toJSON() {
-    return {
-      _id: this._id,
-      name: this.name,
-      phone: this.phone,
-    };
-  },
-};
 
 export default mongoose.model('Vehicle', vehicleSchema);

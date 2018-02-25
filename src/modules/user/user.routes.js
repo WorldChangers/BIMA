@@ -12,14 +12,14 @@ routes.post('/signup', validate(userValidation.signup), userController.signup);
 routes.post('/login', authLocal, userController.login);
 
 // Handling forget password
-routes.post(
-  '/forget',
-  validate(userValidation.forget),
-  userController.forgetPassword,
-);
+// routes.post(
+//   '/forget',
+//   validate(userValidation.forget),
+//   userController.forgetPassword,
+// );
 
-routes.get('/forget/:token', (req, res) => {
-  res.send('Welcome to change your password');
-});
+// routes.get('/forget/:token', (req, res) => {
+//   res.send('Welcome to change your password');
+// });
 
 export default routes;
