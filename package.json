@@ -1,5 +1,5 @@
 {
-  "name": "trip-on",
+  "name": "insurance",
   "description": "A NodeJS server boilerplate for help you kickstart you future node project. ES6/ES7 features.",
   "version": "1.0.3",
   "author": "Terrence <owusuterrence@gmail.com> <https://github.com/thedma04>",
@@ -83,7 +83,6 @@
     "lint-staged": "^4.0.4",
     "mocha": "^3.5.0",
     "morgan": "^1.8.1",
-    "nodemon": "^1.11.0",
     "nps": "^5.7.1",
     "nps-utils": "^1.3.0",
     "prettier": "^1.6.1",
@@ -124,6 +123,7 @@
     "winston": "^2.3.1",
     "webpack": "^3.5.5",
     "webpack-node-externals": "^1.6.0",
-    "webpack-sources": "1.0.1"
+    "webpack-sources": "1.0.1",
+    "nodemon": "^1.11.0"
   }
 }
