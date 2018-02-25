@@ -3,7 +3,7 @@
  */
 
 import bodyParser from 'body-parser';
-import morgan from 'morgan';
+// import morgan from 'morgan';
 import compression from 'compression';
 import passport from 'passport';
 import expressWinston from 'express-winston';
@@ -28,18 +28,18 @@ export default app => {
     '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@',
   );
   app.use(expressStatusMonitor());
-  if (isDev && !isTest) {
-    app.use(morgan('dev'));
-    expressWinston.requestWhitelist.push('body');
-    expressWinston.responseWhitelist.push('body');
-    app.use(
-      expressWinston.logger({
-        winstonInstance,
-        meta: true,
-        msg:
-          'HTTP {{req.method}} {{req.url}}  {{res.statusCode}} {{res.responseTime}}ms',
-        colorStatus: true,
-      }),
-    );
-  }
+//   if (isDev && !isTest) {
+//     app.use(morgan('dev'));
+//     expressWinston.requestWhitelist.push('body');
+//     expressWinston.responseWhitelist.push('body');
+//     app.use(
+//       expressWinston.logger({
+//         winstonInstance,
+//         meta: true,
+//         msg:
+//           'HTTP {{req.method}} {{req.url}}  {{res.statusCode}} {{res.responseTime}}ms',
+//         colorStatus: true,
+//       }),
+//     );
+//   }
 };
