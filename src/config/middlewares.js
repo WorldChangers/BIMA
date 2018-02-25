@@ -24,7 +24,9 @@ export default app => {
   app.use(passport.initialize());
   app.use(helmet());
   app.use(cors());
-  shortID.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@');
+  shortID.characters(
+    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@',
+  );
   app.use(expressStatusMonitor());
   if (isDev && !isTest) {
     app.use(morgan('dev'));

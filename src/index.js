@@ -12,11 +12,14 @@ import ApiRoutes from './modules/';
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.send('Welcome');
+});
 // Wrap all the middlewares with the server
 middlewaresConfig(app);
 
 // Add the apiRoutes stack to the server
-ApiRoutes(app)
+ApiRoutes(app);
 
 // We need this to make sure we don't run a second instance
 if (!module.parent) {

@@ -46,8 +46,9 @@
   "scripts": {
     "build": "nps build",
     "test": "nps test",
+    "start": "nps",
     "test:watch": "nps test.watch",
-    "start": "nps dev",
+    "dev": "nps dev",
     "dev:debug": "nps dev.debug",
     "prettier": "prettier --single-quote --print-width 80 --trailing-comma all --write 'src/**/*.js'",
     "precommit": "nps lintStaged && nps validate",

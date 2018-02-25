@@ -9,7 +9,7 @@ module.exports = {
     build: {
       description: 'Building in production environment.',
       default: series.nps('clean', 'build.build'),
-      build: 'webpack w',
+      build: 'webpack',
     },
     clean: {
       description: 'Clean dist folder.',
