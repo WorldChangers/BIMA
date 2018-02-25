@@ -17,17 +17,19 @@ const devConfig = {
 
 const testConfig = {
   JWT_SECRET: 'ewtijwebgiuweg9w98u9283982t!!u1h28h1t1h89u9h@$$',
-  MONGO_URL: 'mongodb://localhost/nodejs-api-boilerplate-test',
+  MONGO_URL: 'mongodb://kay:owusutk04@ds235328.mlab.com:35328/insurance',
 };
 
 const prodConfig = {
-  JWT_SECRET: process.env.JWT_SECRET_PROD,
-  MONGO_URL: process.env.MONGO_URL_PROD,
+  JWT_SECRET: 'ewtijwebgiuweg9w98u9283982t!!u1h28h1t1h89u9h@$$',
+  MONGO_URL: 'mongodb://kay:owusutk04@ds235328.mlab.com:35328/insurance',
 };
 
 const defaultConfig = {
   PORT: process.env.PORT || 3000,
-  WHITELIST,
+  JWT_SECRET: 'ewtijwebgiuweg9w98u9283982t!!u1h28h1t1h89u9h@$$',
+  MONGO_URL: 'mongodb://kay:owusutk04@ds235328.mlab.com:35328/insurance',
+
 };
 
 function envConfig(env) {

@@ -2,7 +2,7 @@
   "apps": [
     {
       "name": "insurance",
-      "script": "./dist",
+      "script": "./dist/index.bundle.js",
       "merge_logs": true,
       "max_restarts": 20,
       "instances": "max",

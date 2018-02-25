@@ -46,7 +46,7 @@
   "scripts": {
     "build": "nps build",
     "kay": "nps",
-    "start": "nps dev",
+    "start": "nodemon dist/index.bundle.js",
     "dev:debug": "nps dev.debug"
   },
   "devDependencies": {
