@@ -31,7 +31,6 @@ const UserSchema = new Schema(
     },
     phone: {
       type: Number,
-      required: [true, 'Please provide your unique phone number'],
       unique: true,
       minlength: [10, 'Phone number must be valid'],
       maxlength: [10, 'Phone number must be valid'],
@@ -46,7 +45,7 @@ const UserSchema = new Schema(
         message: '{VALUE} Please provide a strong password',
       },
     },
-    organisation: {
+    company: {
       type: String,
       unique: true,
       required: [true, 'Insurance organisation is required'],

@@ -4,10 +4,9 @@ export default {
   signup: {
     body: {
       name: Joi.string().required(),
-      phone: Joi.number().required(),
       email: Joi.string().email(),
-      passsword: Joi.string().regex(/^[a-zA-Z0-9]{6,30}$/),
-      organisation: Joi.string().required(),
+      password: Joi.string().required(),
+      company: Joi.string().required(),
     },
   },
 };
