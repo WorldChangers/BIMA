@@ -83,6 +83,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "babel-cli": "^6.26.0",
+    "morgan": "^1.8.1",
     "babel-core": "^6.26.0",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.17.1",
