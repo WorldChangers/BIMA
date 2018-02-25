@@ -25,7 +25,6 @@ ApiRoutes(app);
 // We need this to make sure we don't run a second instance
 if (!module.parent) {
   app.listen(constants.PORT, err => {
-    console.log(process.env)
     if (err) {
       console.log(chalk.red('Cannot run!'));
     } else {
