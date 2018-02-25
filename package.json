@@ -45,7 +45,7 @@
   },
   "scripts": {
     "build": "nps build",
-    "start": "nodemon dist/index.bundle.js",
+    "start": "node dist/index.bundle.js",
     "dev": "nodemon dist/index.bundle.js",
     "dev:debug": "nps dev.debug"
   },
@@ -82,6 +82,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "babel-cli": "^6.26.0",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.17.1",
     "chalk": "^2.1.0",

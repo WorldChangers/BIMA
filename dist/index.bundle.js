@@ -100,7 +100,8 @@ const WHITELIST = {
 
 const devConfig = {
   JWT_SECRET: process.env.JWT_SECRET_DEV,
-  MONGO_URL: process.env.MONGO_URL
+  MONGO_URL: process.env.MONGO_URL,
+  PORT: process.env.PORT || 3000
 };
 
 const testConfig = {
@@ -185,30 +186,22 @@ var _constants2 = _interopRequireDefault(_constants);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 /**
  * Local Strategy Auth
  */
 const localOpts = { usernameField: 'email' };
 
-const localLogin = new _passportLocal2.default(localOpts, (() => {
-  var _ref = _asyncToGenerator(function* (email, password, done) {
-    try {
-      const user = yield _user2.default.findOne({ email });
+const localLogin = new _passportLocal2.default(localOpts, async (email, password, done) => {
+  try {
+    const user = await _user2.default.findOne({ email });
 
-      if (!user) return done(null, false);else if (!user.comparePassword(password)) return done(null, false);
+    if (!user) return done(null, false);else if (!user.comparePassword(password)) return done(null, false);
 
-      return done(null, user);
-    } catch (e) {
-      return done(e, false);
-    }
-  });
-
-  return function (_x, _x2, _x3) {
-    return _ref.apply(this, arguments);
-  };
-})());
+    return done(null, user);
+  } catch (e) {
+    return done(e, false);
+  }
+});
 
 /**
  * JWT Strategy Auth
@@ -220,23 +213,17 @@ const jwtOpts = {
   secretOrKey: _constants2.default.JWT_SECRET
 };
 
-const jwtLogin = new _passportJwt.Strategy(jwtOpts, (() => {
-  var _ref2 = _asyncToGenerator(function* (payload, done) {
-    try {
-      const user = yield _user2.default.findById(payload._id);
+const jwtLogin = new _passportJwt.Strategy(jwtOpts, async (payload, done) => {
+  try {
+    const user = await _user2.default.findById(payload._id);
 
-      if (!user) return done(null, false);
+    if (!user) return done(null, false);
 
-      return done(null, user);
-    } catch (e) {
-      return done(e, false);
-    }
-  });
-
-  return function (_x4, _x5) {
-    return _ref2.apply(this, arguments);
-  };
-})());
+    return done(null, user);
+  } catch (e) {
+    return done(e, false);
+  }
+});
 
 _passport2.default.use(localLogin);
 _passport2.default.use(jwtLogin);
@@ -638,6 +625,7 @@ app.get('/', (req, res) => {
 // We need this to make sure we don't run a second instance
 if (!module.parent) {
   app.listen(_constants2.default.PORT, err => {
+    console.log(process.env);
     if (err) {
       console.log(_chalk2.default.red('Cannot run!'));
     } else {
@@ -1030,51 +1018,37 @@ var _email2 = _interopRequireDefault(_email);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-const signup = exports.signup = (() => {
-  var _ref = _asyncToGenerator(function* (req, res) {
-    try {
-      // User.collection.dropIndex({"username":1})
-      yield _user2.default.create(req.body);
-      return res.status(_httpStatus2.default.CREATED);
-    } catch (e) {
-      return res.status(_httpStatus2.default.BAD_REQUEST).json(e.errmsg);
-    }
-  });
-
-  return function signup(_x, _x2) {
-    return _ref.apply(this, arguments);
-  };
-})();
+const signup = exports.signup = async (req, res) => {
+  try {
+    // User.collection.dropIndex({"username":1})
+    await _user2.default.create(req.body);
+    return res.status(_httpStatus2.default.CREATED);
+  } catch (e) {
+    return res.status(_httpStatus2.default.BAD_REQUEST).json(e.errmsg);
+  }
+};
 
 const login = exports.login = (req, res) => {
   res.status(_httpStatus2.default.ACCEPTED).json(req.user);
 };
 
 // Forget password
-const forgetPassword = exports.forgetPassword = (() => {
-  var _ref2 = _asyncToGenerator(function* (req, res) {
-    try {
-      const user = yield _user2.default.checkEmail(req.body.email);
+const forgetPassword = exports.forgetPassword = async (req, res) => {
+  try {
+    const user = await _user2.default.checkEmail(req.body.email);
 
-      if (!user) return res.status(_httpStatus2.default.BAD_REQUEST).json({ error: 'Sorry no account found' });
+    if (!user) return res.status(_httpStatus2.default.BAD_REQUEST).json({ error: 'Sorry no account found' });
 
-      const date = Date.now() + 3600000;
-      yield _user2.default.updateToken(user.email, (yield (0, _crypto2.default)()), date);
+    const date = Date.now() + 3600000;
+    await _user2.default.updateToken(user.email, (await (0, _crypto2.default)()), date);
 
-      yield (0, _email2.default)(user, (yield (0, _crypto2.default)()), req);
+    await (0, _email2.default)(user, (await (0, _crypto2.default)()), req);
 
-      return res.status(_httpStatus2.default.OK).json({ message: 'Reset password Email sent successfully' });
-    } catch (e) {
-      return res.sendStatus(_httpStatus2.default.BAD_REQUEST);
-    }
-  });
-
-  return function forgetPassword(_x3, _x4) {
-    return _ref2.apply(this, arguments);
-  };
-})();
+    return res.status(_httpStatus2.default.OK).json({ message: 'Reset password Email sent successfully' });
+  } catch (e) {
+    return res.sendStatus(_httpStatus2.default.BAD_REQUEST);
+  }
+};
 
 // Todo
 // To handle the change Password
@@ -1276,24 +1250,16 @@ var _client2 = _interopRequireDefault(_client);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-const create = exports.create = (() => {
-  var _ref = _asyncToGenerator(function* (req, res) {
-    try {
-      const vehicle = yield _vehicle2.default.create(req.body);
-      yield _client2.default.update({ _id: req.body.owner }, { $push: { vehicles: vehicle._id } });
-      return res.status(_httpStatus2.default.CREATED).json({ vehicleId: vehicle._id });
-    } catch (e) {
-      console.log(e);
-      return res.status(_httpStatus2.default.BAD_REQUEST).json(e.errmsg);
-    }
-  });
-
-  return function create(_x, _x2) {
-    return _ref.apply(this, arguments);
-  };
-})();
+const create = exports.create = async (req, res) => {
+  try {
+    const vehicle = await _vehicle2.default.create(req.body);
+    await _client2.default.update({ _id: req.body.owner }, { $push: { vehicles: vehicle._id } });
+    return res.status(_httpStatus2.default.CREATED).json({ vehicleId: vehicle._id });
+  } catch (e) {
+    console.log(e);
+    return res.status(_httpStatus2.default.BAD_REQUEST).json(e.errmsg);
+  }
+};
 
 // // Prevent Zero Stage of the application by showing org previous uploaded claims
 // export const getOrgClaims = (req, res) => {
@@ -1425,24 +1391,16 @@ var _vehicle2 = _interopRequireDefault(_vehicle);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 // Create Claim
-const create = exports.create = (() => {
-  var _ref = _asyncToGenerator(function* (req, res) {
-    try {
-      const claim = yield _claims2.default.create(req.body);
-      yield _vehicle2.default.update({ _id: req.body.vehicle }, { $push: { claims: claim._id } });
-      return res.status(_httpStatus2.default.CREATED).json({ msg: 'Claim created successfully' });
-    } catch (e) {
-      return res.status(_httpStatus2.default.BAD_REQUEST);
-    }
-  });
-
-  return function create(_x, _x2) {
-    return _ref.apply(this, arguments);
-  };
-})();
+const create = exports.create = async (req, res) => {
+  try {
+    const claim = await _claims2.default.create(req.body);
+    await _vehicle2.default.update({ _id: req.body.vehicle }, { $push: { claims: claim._id } });
+    return res.status(_httpStatus2.default.CREATED).json({ msg: 'Claim created successfully' });
+  } catch (e) {
+    return res.status(_httpStatus2.default.BAD_REQUEST);
+  }
+};
 
 // // Prevent Zero Stage of the application by showing org previous uploaded claims
 // export const getOrgClaims =  async (req, res) => {
@@ -1618,49 +1576,35 @@ var _user2 = _interopRequireDefault(_user);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 // Create Claim
-const create = exports.create = (() => {
-  var _ref = _asyncToGenerator(function* (req, res) {
-    try {
-      //Client.collection.dropIndex({"email":1})
+const create = exports.create = async (req, res) => {
+  try {
+    //Client.collection.dropIndex({"email":1})
 
-      req.body.organization = req.user._id;
-      const client = yield _client2.default.create(req.body);
-      yield _user2.default.update({ _id: req.user._id }, { $push: { clients: client._id } });
-      return res.status(_httpStatus2.default.CREATED).json({ clientId: client._id });
-    } catch (e) {
-      console.log(e);
-      return res.status(_httpStatus2.default.BAD_REQUEST);
-    }
-  });
+    req.body.organization = req.user._id;
+    const client = await _client2.default.create(req.body);
+    await _user2.default.update({ _id: req.user._id }, { $push: { clients: client._id } });
+    return res.status(_httpStatus2.default.CREATED).json({ clientId: client._id });
+  } catch (e) {
+    console.log(e);
+    return res.status(_httpStatus2.default.BAD_REQUEST);
+  }
+};
 
-  return function create(_x, _x2) {
-    return _ref.apply(this, arguments);
-  };
-})();
-
-const getClients = exports.getClients = (() => {
-  var _ref2 = _asyncToGenerator(function* (req, res) {
-    try {
-      const clients = yield _client2.default.find({}).populate({
-        path: 'vehicles',
-        populate: {
-          path: 'claims'
-        }
-      }).sort({ createdAt: 'desc' });
-      return res.status(_httpStatus2.default.ACCEPTED).json(clients);
-    } catch (e) {
-      console.log(e);
-      return res.status(_httpStatus2.default.BAD_REQUEST);
-    }
-  });
-
-  return function getClients(_x3, _x4) {
-    return _ref2.apply(this, arguments);
-  };
-})();
+const getClients = exports.getClients = async (req, res) => {
+  try {
+    const clients = await _client2.default.find({}).populate({
+      path: 'vehicles',
+      populate: {
+        path: 'claims'
+      }
+    }).sort({ createdAt: 'desc' });
+    return res.status(_httpStatus2.default.ACCEPTED).json(clients);
+  } catch (e) {
+    console.log(e);
+    return res.status(_httpStatus2.default.BAD_REQUEST);
+  }
+};
 
 /***/ }),
 /* 52 */
