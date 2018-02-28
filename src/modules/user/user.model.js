@@ -139,6 +139,7 @@ UserSchema.methods = {
       _id: this._id,
       org: this.company,
       token: `JWT ${this.createToken()}`,
+      name: this.name
     };
   },
 };
