@@ -124,6 +124,7 @@ UserSchema.methods = {
     return {
       _id: this._id,
       token: `JWT ${this.createToken()}`,
+      org: this.company
     };
   },
 
@@ -136,7 +137,7 @@ UserSchema.methods = {
   toJSON() {
     return {
       _id: this._id,
-      org: this.organisation,
+      org: this.company,
       token: `JWT ${this.createToken()}`,
     };
   },

@@ -23,6 +23,7 @@ export const create = async (req, res) => {
 export const getClients = async (req, res) => {
   try {
     const clients = await Client.find({})
+      .populate('organization')
       .populate({
         path: 'vehicles',
         populate: {
