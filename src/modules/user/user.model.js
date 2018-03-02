@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema, mongo } from 'mongoose';
 import validator from 'validator';
 import uniqueValidator from 'mongoose-unique-validator';
 import { hashSync, compareSync } from 'bcrypt-nodejs';
@@ -21,6 +21,7 @@ const UserSchema = new Schema(
       type: String,
       required: [true, 'Please provide your email address'],
       unique: true,
+      trim: true,
       lowercase: true,
       validate: {
         validator(email) {
@@ -31,9 +32,7 @@ const UserSchema = new Schema(
     },
     phone: {
       type: Number,
-      unique: true,
-      minlength: [10, 'Phone number must be valid'],
-      maxlength: [10, 'Phone number must be valid'],
+      trim: true
     },
     password: {
       type: String,
@@ -50,18 +49,22 @@ const UserSchema = new Schema(
       unique: true,
       required: [true, 'Insurance organisation is required'],
     },
-    status: {
-      type: String,
-      enum: Object.values(status),
-      default: status.notVerified,
-      required: [true, 'Status is needed'],
-    },
     clients: [
       {
         type: Schema.Types.ObjectId,
         ref: 'Clients',
       },
     ],
+    searchCount: {
+      type: Number,
+      default: 0
+    },
+    status: {
+      type: String,
+      enum: Object.values(status),
+      default: status.notVerified,
+      required: [true, 'Status is needed'],
+    },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
   },
@@ -71,6 +74,17 @@ const UserSchema = new Schema(
 UserSchema.plugin(uniqueValidator, {
   message: '{VALUE} already taken!',
 });
+
+UserSchema.set('toJSON', {
+  virtuals: true
+});
+
+// UserSchema.virtual('companies').get(async function(){
+//   const User = mongoose.model('User')
+//   const companies =  await User.find({})
+//   console.log(companies.length)
+//   return companies.length
+// })
 
 // Defining a pre hock save function
 UserSchema.pre('save', function(next) {
@@ -114,6 +128,13 @@ UserSchema.methods = {
     return jwt.sign({ _id: this._id }, constants.JWT_SECRET);
   },
 
+  companies(){
+    const user = this.model('User')
+
+    const res = user.find()
+    return res.length
+  },
+ 
   /**
    * Parse the user object in data we wanted to send when is auth
    *
@@ -123,7 +144,7 @@ UserSchema.methods = {
   toAuthJSON() {
     return {
       _id: this._id,
-      token: `JWT ${this.createToken()}`,
+      token: `${this.createToken()}`,
     };
   },
 
@@ -136,8 +157,10 @@ UserSchema.methods = {
   toJSON() {
     return {
       _id: this._id,
-      org: this.organisation,
-      token: `JWT ${this.createToken()}`,
+      company: this.company,
+      name: this.name,
+      token: `${this.createToken()}`,
+      clients: this.clients
     };
   },
 };

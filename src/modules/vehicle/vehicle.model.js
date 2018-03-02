@@ -1,18 +1,27 @@
 import mongoose, { Schema } from 'mongoose';
+import ClaimSchema from '../claims/claims.model'
 
-const vehicleSchema = new Schema(
+const vehicleSchema = new Schema (
   {
     make: String,
     color: String,
     model: String,
+    modelYear: Number,
+    NumberOfSeats: Number,
+    NumberOfDoors: Number,
     regNumber: {
       type: String,
       required: [true, 'Please name is required'],
+      trim: true
+    },
+    company: {
+      type: String,
+      required: [true, 'Company is required']
     },
     chassisNumber: {
       type: String,
       required: [true, 'Chassis number is required'],
-      unique: [true, 'Your chassis number must be unique'],
+      trim: true
     },
     purpose: {
       type: String,
@@ -22,12 +31,12 @@ const vehicleSchema = new Schema(
       type: String,
       required: [true, 'Please provide the insurance type'],
     },
-    claims: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Claim',
-      },
-    ],
+    policyNumber: {
+      type: String,
+      required: [true, 'Policy number is required'],
+      trim: true
+    },
+    claims: [ClaimSchema],
   },
   { timestamps: true },
 );

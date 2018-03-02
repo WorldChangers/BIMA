@@ -6,7 +6,7 @@ import clientRoutes from './client/client.routes';
 
 export default app => {
   app.use('/api/v1/users', userRoutes);
-  app.use('/api/v1/claims', claimRoutes);
+  //app.use('/api/v1/claims', claimRoutes);
   app.use('/api/v1/vehicles', vehicleRoutes);
   app.use('/api/v1/clients', clientRoutes);
 };

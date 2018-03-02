@@ -7,7 +7,7 @@ export const create = async (req, res) => {
   try {
     //Client.collection.dropIndex({"email":1})
 
-    req.body.organization = req.user._id;
+    req.body.company = req.user._id;
     const client = await Client.create(req.body);
     await User.update(
       { _id: req.user._id },
@@ -20,19 +20,31 @@ export const create = async (req, res) => {
   }
 };
 
-export const getClients = async (req, res) => {
+export const getCompanyClients = async (req, res) => {
   try {
-    const clients = await Client.find({})
-      .populate({
-        path: 'vehicles',
-        populate: {
-          path: 'claims',
-        },
-      })
-      .sort({ createdAt: 'desc' });
+    const clients = await Client.find({company: req.user.id})
+                  .populate('vehicle')
+                  .sort({ createdAt: 'desc' });
     return res.status(HTTPStatus.ACCEPTED).json(clients);
   } catch (e) {
     console.log(e);
     return res.status(HTTPStatus.BAD_REQUEST);
   }
 };
+
+
+export const editCompanyClients = async(req, next) => {
+  try {
+    Client.update({ _id: req.body.id }, { $set: req.body}, callback);
+    return res.status(HTTPStatus.ACCEPTED).json({msg: 'Updated successfully'})
+  } catch (e) {
+    console.log(e);
+    return res.status(HTTPStatus.BAD_REQUEST);
+  }
+}
+
+
+// Calculation of Risk Score
+// Routes to handle risk score
+// Update the riskScore in company risk score
+// 

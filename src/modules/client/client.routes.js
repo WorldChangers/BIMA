@@ -9,6 +9,6 @@ const routes = new Router();
 // handles the vehicle creation
 routes.post('/', authJwt, clientController.create);
 
-routes.get('/', authJwt, clientController.getClients);
+routes.get('/', authJwt, clientController.getCompanyClients);
 
 export default routes;

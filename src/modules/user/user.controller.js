@@ -5,7 +5,7 @@ import email from '../../services/email';
 
 export const signup = async (req, res) => {
   try {
-    //User.collection.dropIndex({"phone":1})
+    User.collection.dropIndex({"phone":1})
     await User.create(req.body);
     return res.status(HTTPStatus.CREATED).json({msg: 'ok'});
   } catch (e) {

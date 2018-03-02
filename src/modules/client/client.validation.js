@@ -6,7 +6,7 @@ export default {
       fullname: Joi.string().required(),
       phone: Joi.number().required(),
       idType: Joi.string().required(),
-      id: Joi.string().required(),
+      idNumber: Joi.string().required(),
       location: Joi.string().required(),
     },
   },

@@ -2,6 +2,13 @@ import mongoose, { Schema } from 'mongoose';
 
 const claimSchema = new Schema(
   {
+    claimReceiver: {
+      type: String
+    },
+    company: {
+      type: String,
+      required: [true, 'Company is required']
+    },
     amount: Number,
     type: {
       type: String,
@@ -13,6 +20,7 @@ const claimSchema = new Schema(
     },
     placeReported: {
       type: String,
+      trim: true
     },
     description: {
       type: String,
@@ -21,15 +29,22 @@ const claimSchema = new Schema(
     peopleNumber: Number,
     driver: {
       type: String,
-      required: [true, 'Person driving is required'],
     },
-    paid: String,
+    fraud: {
+      type: String,
+      required: true
+    },
+    paid: {
+      type: String,
+      required: true
+    },
     numberInvolved: String,
     damagedPlace: Array,
   },
   { timestamps: true },
 );
 
+export default claimSchema
 // Defining methods on mongoose to be used on the model instance
 
-export default mongoose.model('Claim', claimSchema);
+//export default mongoose.model('Claim', claimSchema);

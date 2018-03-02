@@ -12,7 +12,7 @@ import cors from 'cors';
 import expressStatusMonitor from 'express-status-monitor';
 import shortID from 'shortid';
 
-import winstonInstance from './winston';
+//import winstonInstance from './winston';
 
 const isTest = process.env.NODE_ENV === 'test';
 const isDev = process.env.NODE_ENV === 'development';
@@ -27,7 +27,7 @@ export default app => {
   shortID.characters(
     '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@',
   );
-  app.use(expressStatusMonitor());
+  //app.use(expressStatusMonitor());
 //   if (isDev && !isTest) {
 //     app.use(morgan('dev'));
 //     expressWinston.requestWhitelist.push('body');
