@@ -65,10 +65,75 @@ export const addClaims = async (req, res) => {
     return res.status(HTTPStatus.CREATED).json({msg: 'Success'});
   } catch (e) {
     console.log(e)
+    return res.status(HTTPStatus.BAD_REQUEST).json(e.errmsg);
   }
 
 }
 
+// Show for specific company logged in and client
+export const showHeader = async (req, res) => {
+
+  try {
+    let company = await User.find()
+
+    const clients = company.clients.length
+
+
+    // const vehicles = await Vehicle.find().length;
+
+    // const vehicle = await Vehicle.find()
+    // vehicle.
+  } catch (e) {
+    console.log(e)
+  }
+  
+}
+
+export const riskScore = async (req, res) => {
+  try {
+    console.log(req.params.idNumber)
+    let score = 5
+
+    let fraud = 0
+
+
+    let resp = await Client.find({idNumber: req.params.idNumber})
+
+    const numberOfInsurance = resp.length * 0.22;
+    const checkFraud = resp.forEach(client => {
+      if(client.fraud === 'True'){
+        fraud += 0.23
+      }
+    })
+    console.log(numberOfInsurance, fraud)
+    score -= (numberOfInsurance + fraud)
+
+    score =  (score / 5) * 100
+    return res.status(HTTPStatus.OK).json({riskScore: score.toFixed(1)})
+  } catch (e) {
+    console.log(e)
+    return res.status(HTTPStatus.BAD_REQUEST).json(e.errmsg);
+  }
+}
+
+
+export const editClaim = async (req, res) => {
+  try {
+    
+    const res = await Vehicle.findOne({_id: req.params.vehicleId})
+    await res.claims.forEach(claim => {
+      if(claim._id == req.params.claimsId){
+        res.claims = req.body
+      }
+    })
+
+    await res.save()
+    return res.status(HTTPStatus.OK).json({msg: 'Updated'})
+  } catch (e) {
+    return res.status(HTTPStatus.BAD_REQUEST).json(e.errmsg);
+    console.log(e)
+  }
+}
 
 // // Prevent Zero Stage of the application by showing org previous uploaded claims
 // export const getOrgClaims = (req, res) => {

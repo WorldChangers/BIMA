@@ -26,4 +26,16 @@ routes.post(
   authJwt,
   vehicleController.addClaims
 )
+
+routes.get(
+  '/riskScore/:idNumber',
+  authJwt,
+  vehicleController.riskScore
+)
+
+routes.put(
+  '/edit/claims/:vehicleId/:claimsId',
+  authJwt,
+  vehicleController.editClaim
+)
 export default routes;
