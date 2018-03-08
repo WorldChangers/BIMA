@@ -91,7 +91,7 @@ export const showHeader = async (req, res) => {
 
 export const riskScore = async (req, res) => {
   try {
-    console.log(req.params.idNumber)
+    //console.log(req.params.idNumber)
     let score = 5
 
     let fraud = 0
@@ -102,16 +102,16 @@ export const riskScore = async (req, res) => {
     const numberOfInsurance = resp.length * 0.22;
     const checkFraud = resp.forEach(client => {
       if(client.fraud === 'True'){
-        fraud += 0.23
+        fraud += 0.30
       }
     })
-    console.log(numberOfInsurance, fraud)
-    score -= (numberOfInsurance + fraud)
+    console.log(fraud, numberOfInsurance)
+    score += (numberOfInsurance + fraud)
 
     score =  (score / 5) * 100
     return res.status(HTTPStatus.OK).json({riskScore: score.toFixed(1)})
   } catch (e) {
-    console.log(e)
+    //console.log(e)
     return res.status(HTTPStatus.BAD_REQUEST).json(e.errmsg);
   }
 }
